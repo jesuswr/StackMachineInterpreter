@@ -2,6 +2,8 @@ module StackMachine where
 
 import qualified Data.Map as M
 
+import Data.Char
+
 data Instructions = 
     Push            {val :: StackElements}
     | Pop
@@ -55,11 +57,18 @@ type Stack = [StackElements]
 
 
 -- asumi que un id puede apuntar a un lvalor, que lvalor == lvalor es valido, que 
--- gotrue y gofalse no hacen pop del stack, que el read solo funciona para int y bool
+-- gotrue y gofalse no hacen pop del stack, que el read solo funciona para int y bool,
+-- que reset no debe estar ya que si esta seria un ciclo infinito
+
+-- Param:
+--      Complete Instruction List
+--      A suffix of the Complete Instruction List, that represents the instructions left
+--      Stack of values
+--      Map to save values of ids
+--      Map to save ind of labels
 runStackMachine :: [Instructions] -> [Instructions] -> Stack -> IdToVal -> LabelToInd -> IO()
 runStackMachine _ [] _ _ _ = return ()
 runStackMachine a (i:is) st idMp labelMp = do
-    print st
     case i of
         Push v          -> 
             runStackMachine a is (v:st) idMp labelMp
@@ -169,7 +178,7 @@ runStackMachine a (i:is) st idMp labelMp = do
                         putStrLn $ "Error: gotrue/gofalse operation with empty stack on instrucion number " ++ show((length a) - (length is))
                         runStackMachine a is st idMp labelMp
                     else
-                        case (head st) of
+                        case head st of
                             Boolean x ->
                                 if f x then
                                     runStackMachine a (drop ind a) st idMp labelMp
@@ -191,7 +200,11 @@ runStackMachine a (i:is) st idMp labelMp = do
                 ("false":[])    ->
                     runStackMachine a is st (M.insert s (Boolean False) idMp) labelMp
                 (v:[])          ->
-                    runStackMachine a is st (M.insert s (Num (read v)) idMp) labelMp
+                    if validNum v then
+                        runStackMachine a is st (M.insert s (Num (read v)) idMp) labelMp
+                    else do
+                        putStrLn $ "Error: read operation with unknow input format on instrucion number " ++ show((length a) - (length is))
+                        runStackMachine a is st idMp labelMp
                 _               -> do
                     putStrLn $ "Error: read operation with unknow input format on instrucion number " ++ show((length a) - (length is))
                     runStackMachine a is st idMp labelMp
@@ -206,3 +219,8 @@ runStackMachine a (i:is) st idMp labelMp = do
                     runStackMachine a is st idMp labelMp
         Exit            -> 
             return ()
+
+
+validNum :: String -> Bool
+validNum ('-':n) = all isDigit n
+validNum n = all isDigit n
