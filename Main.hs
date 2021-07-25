@@ -3,6 +3,9 @@ module Main where
 import System.Environment
 import System.Directory
 
+import qualified Data.Map as M
+
+
 import qualified MiniParser as P
 import qualified StackMachine as SM
 
@@ -24,6 +27,5 @@ go fileName = do
     else do
         _input <- readFile fileName
         let input = map words $ lines _input
-        print input
-        let toks = P.parse input
-        print toks
+        let (toks, labelMp) = P.parse input
+        SM.runStackMachine toks toks [] M.empty labelMp

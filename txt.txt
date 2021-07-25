@@ -1,8 +1,9 @@
-PUSH 4
-label1:
-POP
-label2:
-UMINUS
-label3: NOT
-label4:
-label5:
+LABEL1:
+
+PRINT x
+PUSH 1
+LVALUE x
+ASSIGN
+
+PUSH true
+GOFALSE LABEL1

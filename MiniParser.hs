@@ -26,8 +26,10 @@ isLabel :: String -> Bool
 isLabel s = last s == ':'
 
 getInstruction :: [String] -> SM.Instructions
-getInstruction ("PUSH":val:[])      = SM.Push (read val)
-getInstruction ("POP":[])          = SM.Pop 
+getInstruction ("PUSH":"true":[])   = SM.Push (SM.Boolean True)
+getInstruction ("PUSH":"false":[])  = SM.Push (SM.Boolean True)
+getInstruction ("PUSH":v:[])        = SM.Push (SM.Num $ read v)
+getInstruction ("POP":[])           = SM.Pop 
 getInstruction ("ADD":[])           = SM.AritBinOp (+) 
 getInstruction ("SUB":[])           = SM.AritBinOp (-) 
 getInstruction ("MUL":[])           = SM.AritBinOp (*) 
@@ -38,8 +40,8 @@ getInstruction ("LT":[])            = SM.RelBinOp (<)
 getInstruction ("LE":[])            = SM.RelBinOp (<=)
 getInstruction ("GT":[])            = SM.RelBinOp (>)
 getInstruction ("GE":[])            = SM.RelBinOp (>=)
-getInstruction ("EQ":[])            = SM.RelBinOp (==)
-getInstruction ("NEQ":[])           = SM.RelBinOp (/=)
+getInstruction ("EQ":[])            = SM.Eq 
+getInstruction ("NEQ":[])           = SM.NotEq
 getInstruction ("UMINUS":[])        = SM.UMinus
 getInstruction ("NOT":[])           = SM.Not
 getInstruction ("RVALUE":name:[])   = SM.RValue name
