@@ -24,26 +24,6 @@ data Instructions =
     | Exit
 --  | Reset         Ignoring this because of endless loop
 
-instance Show Instructions where
-    show (Push v)       = "Push " ++ (show v)
-    show Pop            = "Pop"
-    show (AritBinOp f)  = "AritBinOp " ++ "3 op 2 = " ++ (show (f 3 2))
-    show (BoolBinOp f)  = "BoolBinOp " ++ "true op false = " ++ (show (f True False))
-    show (RelBinOp f)   = "RelBinOp " ++ "1 op 0 = " ++ (show (f 1 0)) ++ "; 1 op 1 = " ++ (show (f 1 1))
-    show Eq             = "=="
-    show NotEq          = "!="
-    show UMinus         = "UMinus"
-    show Not            = "Not"
-    show (RValue s)     = "RValue " ++ s
-    show (LValue s)     = "LValue " ++ s
-    show Assign         = "Assign"
-    show (Go s)         = "Go " ++ s
-    show (GoCond s f)   = "GoCond " ++ s ++ " f(true) = " ++ (show (f True))
-    show (Read s)       = "Read " ++ s
-    show (Print s)      = "Print" ++ s
-    show Exit           = "Exit"
-
-
 type LabelToInd = M.Map String Int
 type IdToVal = M.Map String StackElements
 
@@ -54,7 +34,6 @@ data StackElements =
     deriving (Eq, Show)
 
 type Stack = [StackElements]
-
 
 -- asumi que un id puede apuntar a un lvalor, que lvalor == lvalor es valido, que 
 -- gotrue y gofalse no hacen pop del stack, que el read solo funciona para int y bool,
