@@ -1,0 +1,112 @@
+PUSH 1
+POP
+
+PUSH true
+POP
+
+PUSH 2
+PUSH 3
+ADD
+POP
+
+PUSH 2
+PUSH 3
+MUL
+POP
+
+PUSH 2
+PUSH 3
+SUB
+POP
+
+PUSH 2
+PUSH 3
+DIV
+POP
+
+PUSH true
+PUSH false
+AND
+POP
+
+PUSH true
+PUSH false
+OR
+POP
+
+PUSH 2
+PUSH 3
+LT
+POP
+
+PUSH 3
+PUSH 3
+LE
+POP
+
+PUSH 4
+PUSH 3
+GT
+POP
+
+PUSH 4
+PUSH 4
+GE
+POP
+
+PUSH true
+PUSH false
+EQ
+POP
+
+PUSH true
+PUSH false
+NEQ
+POP
+
+PUSH 5
+UMINUS
+POP
+
+PUSH true
+NOT
+POP
+
+RVALUE X
+
+READ X
+
+PRINT X
+
+PUSH 10
+LVALUE X
+ASSIGN
+
+PRINT X
+
+READ X
+
+RVALUE X
+PUSH 42
+EQ
+
+GOTRUE continue
+EXIT
+
+continue:
+READ X
+
+RVALUE X
+PUSH 73
+NEQ
+
+GOFALSE continue2
+PRINT X
+EXIT
+
+continue2:
+GOTO end
+READ X
+
+end:
+EXIT

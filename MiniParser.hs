@@ -27,7 +27,7 @@ isLabel s = last s == ':'
 
 getInstruction :: [String] -> SM.Instructions
 getInstruction ("PUSH":"true":[])   = SM.Push (SM.Boolean True)
-getInstruction ("PUSH":"false":[])  = SM.Push (SM.Boolean True)
+getInstruction ("PUSH":"false":[])  = SM.Push (SM.Boolean False)
 getInstruction ("PUSH":v:[])        = SM.Push (SM.Num $ read v)
 getInstruction ("POP":[])           = SM.Pop 
 getInstruction ("ADD":[])           = SM.AritBinOp (+) 
