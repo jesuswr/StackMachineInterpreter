@@ -53,6 +53,9 @@ data StackElements =
 
 type Stack = [StackElements]
 
+
+-- asumi que un id puede apuntar a un lvalor, que lvalor == lvalor es valido, que 
+-- gotrue y gofalse no hacen pop del stack, que el read solo funciona para int y bool
 runStackMachine :: [Instructions] -> [Instructions] -> Stack -> IdToVal -> LabelToInd -> IO()
 runStackMachine _ [] _ _ _ = return ()
 runStackMachine a (i:is) st idMp labelMp = do
