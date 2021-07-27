@@ -35,10 +35,6 @@ data StackElements =
 
 type Stack = [StackElements]
 
--- asumi que un id puede apuntar a un lvalor, que lvalor == lvalor es valido, que 
--- gotrue y gofalse no hacen pop del stack, que el read solo funciona para int y bool,
--- que reset no debe estar ya que si esta seria un ciclo infinito
-
 -- Param:
 --      Complete Instruction List
 --      A suffix of the Complete Instruction List, that represents the instructions left
