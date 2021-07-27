@@ -9,7 +9,7 @@ data Instructions =
     | Pop
     | AritBinOp     {aritOp :: (Int -> Int -> Int)}    -- +,-,*,/
     | BoolBinOp     {boolOp :: (Bool -> Bool -> Bool)} -- and or
-    | RelBinOp      {relOp :: (Int -> Int -> Bool)}   -- < <= > >= == !=
+    | RelBinOp      {relOp :: (Int -> Int -> Bool)}   -- < <= > >=
     | Eq         
     | NotEq         
     | UMinus
