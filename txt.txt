@@ -12,7 +12,6 @@ PUSH 10
 LT
 
 GOFALSE out
-POP
 
 RVALUE s
 RVALUE i
@@ -35,7 +34,6 @@ ASSIGN
 GOTO in
 
 out:
-POP
 
 PRINT s
 PRINT i

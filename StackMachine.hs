@@ -43,7 +43,7 @@ type Stack = [StackElements]
 --      Map to save ind of labels
 runStackMachine :: [Instructions] -> [Instructions] -> Stack -> IdToVal -> LabelToInd -> IO()
 runStackMachine _ [] _ _ _ = return ()
-runStackMachine a (i:is) st idMp labelMp = do
+runStackMachine a (i:is) st idMp labelMp =
     case i of
         Push v          -> 
             runStackMachine a is (v:st) idMp labelMp
@@ -156,9 +156,9 @@ runStackMachine a (i:is) st idMp labelMp = do
                         case head st of
                             Boolean x ->
                                 if f x then
-                                    runStackMachine a (drop ind a) st idMp labelMp
+                                    runStackMachine a (drop ind a) (tail st) idMp labelMp
                                 else
-                                    runStackMachine a is st idMp labelMp
+                                    runStackMachine a is (tail st) idMp labelMp
                             _         -> do
                                 putStrLn $ "Error: gotrue/gofalse operation without boolean on stack on instrucion number " ++ show((length a) - (length is))
                                 runStackMachine a is st idMp labelMp
@@ -192,6 +192,7 @@ runStackMachine a (i:is) st idMp labelMp = do
                 Nothing     -> do
                     putStrLn $ "Error: print operation with unexisting label on instrucion number " ++ show((length a) - (length is))
                     runStackMachine a is st idMp labelMp
+
         Exit            -> 
             return ()
 
